@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmuxbg7qep0cr"]
+[gd_scene load_steps=5 format=3 uid="uid://dmuxbg7qep0cr"]
 
+[ext_resource type="Script" uid="uid://dtvaaduu5oob3" path="res://Scenes/PipeScript.gd" id="1_3mgyh"]
 [ext_resource type="Texture2D" uid="uid://dlurc32x8rfwk" path="res://Sprites/pipe.png" id="1_4gnf3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3mgyh"]
@@ -9,6 +10,7 @@ size = Vector2(86, 598.25)
 size = Vector2(20, 166)
 
 [node name="PipeGroup" type="Node2D"]
+script = ExtResource("1_3mgyh")
 
 [node name="BottomPipe" type="Sprite2D" parent="."]
 position = Vector2(0, 380)

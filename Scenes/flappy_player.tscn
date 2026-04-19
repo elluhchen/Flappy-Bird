@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjv8c4rvurqoc"]
+[gd_scene load_steps=10 format=3 uid="uid://bjv8c4rvurqoc"]
 
+[ext_resource type="Script" uid="uid://cylf7ji6wf4w3" path="res://Scenes/flappy_player.gd" id="1_6qwkw"]
 [ext_resource type="Texture2D" uid="uid://05bdv0x4fp3p" path="res://Sprites/flappy05.png" id="1_vhyux"]
 [ext_resource type="Texture2D" uid="uid://c7lc3t7syg762" path="res://Sprites/flappy00.png" id="2_6qwkw"]
 [ext_resource type="Texture2D" uid="uid://cocx8661qeu45" path="res://Sprites/flappy01.png" id="3_fq8ru"]
@@ -13,7 +14,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_vhyux")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 5.0
 }, {
@@ -33,7 +34,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_aclpf")
 }],
-"loop": true,
+"loop": false,
 "name": &"flap",
 "speed": 20.0
 }, {
@@ -62,10 +63,11 @@ animations = [{
 radius = 23.0217
 
 [node name="FlappyPlayer" type="RigidBody2D"]
+script = ExtResource("1_6qwkw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4hn0l")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -75,3 +77,5 @@ monitorable = false
 position = Vector2(3, -4)
 rotation = 0.0863913
 shape = SubResource("CircleShape2D_nnxf4")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

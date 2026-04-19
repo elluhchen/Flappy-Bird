@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=4 uid="uid://nbe7h40ocdqf"]
+
+[ext_resource type="Texture2D" uid="uid://bo63gq1b55u6j" path="res://Sprites/mounts.png" id="1_8gbba"]
+[ext_resource type="Script" uid="uid://bb6tl8h07oie3" path="res://Scenes/Main.gd" id="1_kry3j"]
+[ext_resource type="Texture2D" uid="uid://b5gugm4w5scju" path="res://Sprites/ground.png" id="2_jjvhh"]
+[ext_resource type="Script" uid="uid://csn71p5k141pg" path="res://Scenes/Scroller.gd" id="3_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://bjv8c4rvurqoc" path="res://Scenes/flappy_player.tscn" id="3_kry3j"]
+[ext_resource type="AudioStream" uid="uid://cs5a8xka4w07b" path="res://Sound/hitHurt.wav" id="6_6bp64"]
+[ext_resource type="AudioStream" uid="uid://g7h73twas4ao" path="res://Sound/jump.wav" id="7_344ge"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_21xkr"]
+texture = ExtResource("1_8gbba")
+texture_region_size = Vector2i(210, 400)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_6bp64"]
+tile_size = Vector2i(210, 400)
+sources/0 = SubResource("TileSetAtlasSource_21xkr")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_344ge"]
+texture = ExtResource("2_jjvhh")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ynf5e"]
+tile_size = Vector2i(100, 100)
+sources/0 = SubResource("TileSetAtlasSource_344ge")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
+size = Vector2(412, 99)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kry3j")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 400.0
+offset_bottom = 600.0
+color = Color(0.485192, 0.69347, 0.999999, 1)
+
+[node name="MountsLayer" type="TileMapLayer" parent="."]
+position = Vector2(0, 210)
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_6bp64")
+script = ExtResource("3_jjvhh")
+speedFactor = 0.2
+
+[node name="PipesFolder" type="Node2D" parent="."]
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_ynf5e")
+script = ExtResource("3_jjvhh")
+
+[node name="FlappyPlayer" parent="." instance=ExtResource("3_kry3j")]
+position = Vector2(161, 269)
+
+[node name="StageLimits" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StageLimits"]
+position = Vector2(196, -30)
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StageLimits"]
+position = Vector2(195, 551.5)
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="GOSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_6bp64")
+
+[node name="FlapSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_344ge")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
